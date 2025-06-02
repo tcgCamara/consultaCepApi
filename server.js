@@ -1,13 +1,11 @@
 import Express from 'express'   
 import serviceBuscaCEP from './services/serviceCorreios.js'
+import Cep from './classes/cepBuscado.js'
 
 const server = Express()
 server.use(Express.json())
 
 const PORT = 3000
-
-// GET, POST, PUT, DELETE 
-// CRUD - Create (POST), Read (GET), Update (PUT), Delete (DELETE)
 
 server.listen(PORT, (req, res) => { 
     console.log('Servidor ecutando...')} 
@@ -17,15 +15,22 @@ server.get('/', (req,res) => {
     res.status(200).send('Servidor rodando!')
 })
 
-server.get('/cep', async (req, res) => {
-    //console.log(req.query.cep)
-    const cepParaBuscar = req.query.cep
+server.get('/cep/:id/', async (req, res) => {
+    //espera-se os query params: ?cep=bool&rua=bool&bairro=true&municipio=true&estado=true
 
-    const cepConsultado = await serviceBuscaCEP(cepParaBuscar)
+    const cepNumerico = new Cep(req.params.id)
+    cepNumerico.requestedReceivedData = req.query;
+    const verifiedCepNumber = cepNumerico.validateCepNumber()
 
-    res.status(200).send(cepConsultado)
+    if (!verifiedCepNumber){
+        res.status(400).send(cepNumerico.cepFormatError).end()
+    }
+
+    const cepResponse = await serviceBuscaCEP(cepNumerico.cepNumber)
+
+    res.status(200).send(cepResponse)
 })
 
-server.post('/cep', (req, res) => {
+server.get('/registros', (req, res) => {
     
 })

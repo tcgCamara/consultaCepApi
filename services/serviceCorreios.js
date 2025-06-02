@@ -1,7 +1,7 @@
 async function serviceBuscaCEP (cepParaBuscar) {
 
     const buscaCepURL = 'http://viacep.com.br/ws/'+ cepParaBuscar + '/json/'
-    const erroCepNaoEncontrado = 'Houve um erro em sua pesquisa. O CEP não corresponde a um CEP válido.'
+    const erroCepIndisponivel = 'Houve um erro em sua pesquisa. O CEP não corresponde a um CEP válido.'
     const erroNaConsulta = 'Cep: '+ cepParaBuscar + ' não foi encontrado. Erro: '
 
     try {
@@ -12,7 +12,7 @@ async function serviceBuscaCEP (cepParaBuscar) {
         console.log(respostaConsultaJson)
 
         if ('erro' in respostaConsultaJson) {
-            return erroCepNaoEncontrado
+            return erroCepIndisponivel
         }
 
         return respostaConsultaJson
