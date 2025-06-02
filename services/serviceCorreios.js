@@ -1,24 +1,26 @@
-async function serviceBuscaCEP (cepParaBuscar) {
+async function serviceBuscaCEP (requiredCEP) {
 
-    const buscaCepURL = 'http://viacep.com.br/ws/'+ cepParaBuscar + '/json/'
-    const erroCepIndisponivel = 'Houve um erro em sua pesquisa. O CEP não corresponde a um CEP válido.'
-    const erroNaConsulta = 'Cep: '+ cepParaBuscar + ' não foi encontrado. Erro: '
+    const URL = 'http://viacep.com.br/ws/'+ requiredCEP + '/json/'
+
+    // estes erros deveriam ser apresentados em um throw console.log(), mas é legal ver a resposta na web. rs
+    const unreacheableCep = 'Houve um erro em sua pesquisa. O CEP não corresponde a um CEP válido.'
+    const serviceQueryError = 'Cep: '+ requiredCEP + ' não foi encontrado. Erro: '
 
     try {
-        const respostaConsulta = await fetch(buscaCepURL)
-        const respostaConsultaJson = await respostaConsulta.json()        
+        const responseURL = await fetch(URL)
+        const responseContentJson = await responseURL.json()        
 
-        console.log(respostaConsulta.status)
-        console.log(respostaConsultaJson)
+        console.log(responseURL.status)
+        console.log(responseContentJson)
 
-        if ('erro' in respostaConsultaJson) {
-            return erroCepIndisponivel
+        if ('erro' in responseContentJson) {
+            return unreacheableCep
         }
 
-        return respostaConsultaJson
+        return responseContentJson
 
     } catch (e) {
-        throw(console.log(erroNaConsulta + e ))
+        throw(console.log(serviceQueryError + e ))
     }
 
 }

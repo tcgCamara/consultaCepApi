@@ -8,12 +8,11 @@ export default class Cep {
     }
 
     validateCepNumber () {
-
         // duas validações: o cep tem o comprimento de 8 caracteres e se são todos números
+        
         // valida se o cep tem 8 dígitos
         if (this.cepNumber.length !== 8) {
             return false;
-
         }
 
         // valida se o cep contém apenas números
@@ -26,5 +25,9 @@ export default class Cep {
         } 
 
         return true
+    }
+
+    indexSolicitation (){
+        
     }
 }

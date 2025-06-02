@@ -1,4 +1,4 @@
-export default class dataBank {
+export default class DataBankCep {
 
     construct () {
 
