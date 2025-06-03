@@ -1,5 +1,8 @@
 import Cep from '../classes/cepBuscado.js';
 import serviceBuscaCEP from '../services/serviceCorreios.js';
+import DataBankCep from '../classes/cepBank.js';
+
+const storedMemory = new DataBankCep()
 
 class cepController {
 
@@ -22,17 +25,24 @@ class cepController {
             const cepResponse = await serviceBuscaCEP(numericCep.cepNumber)
             const indexedResponse = numericCep.indexSolicitation(numericCep.requestedData, cepResponse)
             
+            storedMemory.addNewContent(numericCep.cepNumber, indexedResponse)
+            console.log(storedMemory.listAllContent())
+
             res.status(200).send(indexedResponse)
         } catch (e) {
-            res.status(500).send('Internal server error.')
-        }
-
-        
-        
+            res.status(500).send('Internal server error...')
+        }        
     }
 
-    static filterConsultedCep () {
+    static filterConsultedCep (req, res) {
+        if ('cep' in req.query) {
+            const valorCep = req.query.cep
+            console.log('O cep ' +req.query.cep + '  é contido na pesquisa!')
+            res.status(200).send(storedMemory.findCepInside(valorCep))
+            return
+        }
 
+        res.status(200).send(storedMemory.listAllContent()).end()
     }
 
 }

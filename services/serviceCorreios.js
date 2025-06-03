@@ -14,8 +14,8 @@ async function serviceBuscaCEP (requiredCEP) {
         const responseURL = await fetch(URL)
         const responseContentJson = await responseURL.json()        
 
-        console.log(responseURL.status)
-        console.log(responseContentJson)
+        // console.log(responseURL.status)
+        // console.log(responseContentJson)
 
         if ('erro' in responseContentJson) {
             return unreacheableCep
