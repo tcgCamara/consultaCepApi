@@ -15,13 +15,10 @@ server.get('/', (req,res) => {
 })
 
 server.get('/cep/:id/', async (req, res) => {
-    // const cepResponse = await serviceBuscaCEP(cepNumerico.cepNumber)
-    const cepResponse = await cepController.accessCepApi(req, res)
-
-    res.status(200).send(cepResponse)
+    await cepController.accessCepApi(req, res)  
 })
 
-server.get('/registros', (req, res) => {
+server.get('/register', (req, res) => {
     //espera-se as queries: ?cepOnly=number
     //retorna ao cliente todos os CEP solicitados ou somente um através da query cepOnly 
     

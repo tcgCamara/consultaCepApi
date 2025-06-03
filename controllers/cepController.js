@@ -9,18 +9,30 @@ class cepController {
         //talvez esta query fosse melhor melhor um JSON no Body da requisição... 
     
         const numericCep = new Cep(req.params.id)
-        numericCep.requestedReceivedData = req.query;
+        numericCep.requestedData = req.query;
 
-        const verifiedCepNumber = numericCep.validateCepNumber()
-    
-        if (!verifiedCepNumber){
-            return numericCep.cepFormatError
+        //console.log(numericCep.requestedData)
+
+        if (!numericCep.validateCepNumber()){
+            res.status(400).send(numericCep.cepFormatError).end()
+            return
         }
 
-        const cepResponse = await serviceBuscaCEP(numericCep.cepNumber)
+        try {
+            const cepResponse = await serviceBuscaCEP(numericCep.cepNumber)
+            const indexedResponse = numericCep.indexSolicitation(numericCep.requestedData, cepResponse)
+            
+            res.status(200).send(indexedResponse)
+        } catch (e) {
+            res.status(500).send('Internal server error.')
+        }
 
-        return cepResponse
         
+        
+    }
+
+    static filterConsultedCep () {
+
     }
 
 }

@@ -1,10 +1,14 @@
+import Cep from "../classes/cepBuscado.js"
+
 async function serviceBuscaCEP (requiredCEP) {
 
-    const URL = 'http://viacep.com.br/ws/'+ requiredCEP + '/json/'
+    const numericCep = new Cep(requiredCEP)
+
+    const URL = 'http://viacep.com.br/ws/'+ numericCep.cepNumber + '/json/'
 
     // estes erros deveriam ser apresentados em um throw console.log(), mas é legal ver a resposta na web. rs
     const unreacheableCep = 'Houve um erro em sua pesquisa. O CEP não corresponde a um CEP válido.'
-    const serviceQueryError = 'Cep: '+ requiredCEP + ' não foi encontrado. Erro: '
+    const serviceQueryError = 'Cep: '+ numericCep.cepNumber + ' não foi encontrado. Erro: '
 
     try {
         const responseURL = await fetch(URL)
