@@ -8,7 +8,7 @@ class cepController {
 
     // incluído static para que não precise instanciar a classe a uma variável
     static async accessCepApi (req, res) {
-        //espera-se as queries: ?cep=bool&rua=bool&bairro=true&municipio=true&estado=true
+        //espera-se as queries: ?cep=bool&logradouro=bool&bairro=true&localidade=true... etc
         //talvez esta query fosse melhor melhor um JSON no Body da requisição... 
     
         const numericCep = new Cep(req.params.id)
@@ -25,7 +25,7 @@ class cepController {
             const cepResponse = await serviceBuscaCEP(numericCep.cepNumber)
             const indexedResponse = numericCep.indexSolicitation(numericCep.requestedData, cepResponse)
             
-            storedMemory.addNewContent(numericCep.cepNumber, indexedResponse)
+            storedMemory.addNewContent(numericCep.cepNumber, cepResponse)
             console.log(storedMemory.listAllContent())
 
             res.status(200).send(indexedResponse)

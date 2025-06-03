@@ -18,7 +18,7 @@ server.get('/cep/:id/', async (req, res) => {
 })
 
 server.get('/storage', (req, res) => {
-    //espera-se as queries: ?cepOnly=number
+    //a query ?cep=number pode ser enviada para filtrar
     //retorna ao cliente todos os CEP solicitados ou somente um através da query cepOnly 
     cepController.filterConsultedCep(req, res)
     
