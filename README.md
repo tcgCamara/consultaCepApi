@@ -1,4 +1,4 @@
-# Projeto para Constultar API externa 280525
+# Projeto para Constultar API Externa
 
 O intuito deste projeto foca no aprendizado da construção de rotas/endpoints de um backend que faz a consulta de uma API externa. Este projeto não é uma cópia de nenhum outro projeto online, mas é a minha forma de aprendizado onde coloco diversos conhecimentos em um só lugar, supondo que fosse uma proposta de um cliente para mim. Logo, alguns comentários explícitos são formas de anotações do aprendizado sobre a leitura do código e não a descrição do código em si. 
 
